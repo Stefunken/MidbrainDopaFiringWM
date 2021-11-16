@@ -28,6 +28,11 @@ for i_neuron = 1:length(e_KD) % Loop through each (e)xperimentd, neuron!!
         MT2(i_trial_2) =   B2(i_trial_2).events(8) - B2(i_trial_2).events(7);
     end
     
+    for i_trial = 1:length(e_KD(i_neuron).trial)
+        RTKD(i_trial) = e_KD(i_neuron).trial(i_trial).events(2) - e_KD(i_neuron).trial(i_trial).events(1);
+    end
+     
+    
 %     for i_trial_1 =1:length(auxE1)
 %         RT_E1(i_trial_1) =   auxE1(i_trial_1).events(7) - auxE1(i_trial_1).events(6);
 %         MT_E1(i_trial_1) =   auxE1(i_trial_1).events(8) - auxE1(i_trial_1).events(7);
@@ -48,7 +53,12 @@ for i_neuron = 1:length(e_KD) % Loop through each (e)xperimentd, neuron!!
     meanMT2(i_neuron) = mean(MT2);
     stdMT1(i_neuron) = std(MT1);
     stdMT2(i_neuron) = std(MT2);
+
+    meanRTKD(i_neuron) = mean(RTKD);
+    stdRTKD(i_neuron) = std(RTKD);
     
+    clearvars RT1 RT2 MT1 MT2 RTKD
+
 %     meanRT_E1(i_neuron) = mean(RT_E1);
 %     meanRT_E2(i_neuron) = mean(RT_E2);
 %     stdRT_E1(i_neuron) = std(RT_E1);
@@ -59,22 +69,27 @@ for i_neuron = 1:length(e_KD) % Loop through each (e)xperimentd, neuron!!
 %     stdMT_E1(i_neuron) = std(MT_E1);
 %     stdMT_E2(i_neuron) = std(MT_E2);
     
-    
+     
     for i_trial = 1:length(e_KD(i_neuron).trial)
         
         e1(i_neuron).trial(i_trial).RT = e_KD(i_neuron).trial(i_trial).events(7)-...
             e_KD(i_neuron).trial(i_trial).events(6) ;
         e1(i_neuron).trial(i_trial).MT = e_KD(i_neuron).trial(i_trial).events(8)-...
             e_KD(i_neuron).trial(i_trial).events(7) ;
-  
-            if (e1(i_neuron).trial(i_trial).conditions(1)<=6)
-                e1(i_neuron).trial(i_trial).RT_norm = (e1(i_neuron).trial(i_trial).RT-meanRT1(i_neuron))/stdRT1(i_neuron);
-                e1(i_neuron).trial(i_trial).MT_norm = (e1(i_neuron).trial(i_trial).MT-meanMT1(i_neuron))/stdMT1(i_neuron);
-                
-            elseif (e1(i_neuron).trial(i_trial).conditions(1)>6 && e1(i_neuron).trial(i_trial).conditions(1)<=12)
-                e1(i_neuron).trial(i_trial).RT_norm = (e1(i_neuron).trial(i_trial).RT-meanRT2(i_neuron))/stdRT2(i_neuron);
-                e1(i_neuron).trial(i_trial).MT_norm = (e1(i_neuron).trial(i_trial).MT-meanMT2(i_neuron))/stdMT2(i_neuron);
-            end
+        
+        e1(i_neuron).trial(i_trial).RTKD = e_KD(i_neuron).trial(i_trial).events(2)-...
+                                                e_KD(i_neuron).trial(i_trial).events(1) ;
+        e1(i_neuron).trial(i_trial).RTKD_norm = (e1(i_neuron).trial(i_trial).RTKD - ...
+                                                meanRTKD(i_neuron))/stdRTKD(i_neuron);
+                                            
+        if (e1(i_neuron).trial(i_trial).conditions(1)<=6)
+            e1(i_neuron).trial(i_trial).RT_norm = (e1(i_neuron).trial(i_trial).RT-meanRT1(i_neuron))/stdRT1(i_neuron);
+            e1(i_neuron).trial(i_trial).MT_norm = (e1(i_neuron).trial(i_trial).MT-meanMT1(i_neuron))/stdMT1(i_neuron);
+
+        elseif (e1(i_neuron).trial(i_trial).conditions(1)>6 && e1(i_neuron).trial(i_trial).conditions(1)<=12)
+            e1(i_neuron).trial(i_trial).RT_norm = (e1(i_neuron).trial(i_trial).RT-meanRT2(i_neuron))/stdRT2(i_neuron);
+            e1(i_neuron).trial(i_trial).MT_norm = (e1(i_neuron).trial(i_trial).MT-meanMT2(i_neuron))/stdMT2(i_neuron);
+        end
         
         
         if e1(i_neuron).trial(i_trial).conditions(3)==0

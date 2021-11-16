@@ -4,13 +4,7 @@ clc
 %%%%%%%%%%%%%%%%%%%%%%
 
 addpath('data_folder')
-
 results_folder = 'preprocessed_data';
-if ~exist(results_folder, 'dir')
-    mkdir(results_folder)
-end
-%%%%%%%%%%%%%%%%%%%%%%%
-
 
 n_files = 299;
 fileList =  1:n_files; % 13 n, select the neurons compatible with RL
@@ -144,12 +138,6 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% SAVE THE RELEVANT SESSIONS
 eDASetB = e(index_equal);
-eDASetB=get_times_setB(eDASetB);
-
-for i=1:size(eDASetB,2)
-eDASetB(i).trial = rmfield(eDASetB(i).trial,'spikeTimes');
-end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 save([results_folder '/filesFormattedSetB'],'eDASetB')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 results_performance.mean_accuracy_class = performance_class_DA;

@@ -1,5 +1,5 @@
 function [ROC, p, latency] = rocindex_permTest(A,B,varargin)
-%rocindex()  Calculates the probability of succesfully distinguishing values coming from distribution A from
+% rocindex_permTest()  Calculates the probability of succesfully distinguishing values coming from distribution A from
 %            values coming from distribution B.
 %
 %   [ROC ci latency] = rocindex(A,B)
